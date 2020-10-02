@@ -98,10 +98,10 @@ TextureImporter:
         serializedVersion: 2
         x: 69
         y: 78
-        width: 48
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 107
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5644314, y: 0.51332206}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -119,10 +119,10 @@ TextureImporter:
         serializedVersion: 2
         x: 269
         y: 78
-        width: 48
-        height: 56
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 107
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5472495, y: 0.49999988}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
