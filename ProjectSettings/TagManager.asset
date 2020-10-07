@@ -42,3 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Characters
+    uniqueID: 2489303271
+    locked: 0
+  - name: BG
+    uniqueID: 989897501
+    locked: 0

@@ -13,6 +13,7 @@ public class CharacterMovement : MonoBehaviour
     public float [] nextAttack;
     public bool grounded;
     public bool canMove; //bool para controlar si el jugador se puede mover o no
+    public bool canAttack;
 
     Vector3 motion;
     Rigidbody2D rb;
@@ -22,6 +23,9 @@ public class CharacterMovement : MonoBehaviour
 
     public Animator animator;
 
+    public bool isShielding;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,29 +33,30 @@ public class CharacterMovement : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         grounded = true;
         canMove = true;
-        
-    }
-
-    IEnumerator WaitForSeconds(){ //esta corrutina vuelve a poner el booleano que activa el movimiento en true
-        yield return new WaitForSeconds(1);
-        canMove = true;
-    }
-
-    void wait(){
-        StartCoroutine(WaitForSeconds());
+        canAttack = true;
+        isShielding = false;
         
     }
 
 
+    void isAttacking(){ //este meteodo detiene el movimiento mientras esta attackando
+        motion.x = 0;
+        canMove = false;
+        motion.y = rb.velocity.y;
+        rb.velocity = motion;
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+    }
+
+  
     // Update is called once per frame
     void Update()
     {
 
         if(canMove){
-        motion.x = Input.GetAxisRaw("Horizontal") * speed;
-        horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
-        motion.y = rb.velocity.y;
-        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+            motion.x = Input.GetAxisRaw("Horizontal") * speed;
+            horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
+            motion.y = rb.velocity.y;
+            animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
         } 
 
 
@@ -60,43 +65,50 @@ public class CharacterMovement : MonoBehaviour
         rb.velocity = motion;
 
         //falta hacer las animaciones en metodos separados
-        if ((Input.GetKeyDown(KeyCode.Y) && Time.time>nextAttack[1] && grounded)){  //mid attack
+        if ((Input.GetKeyDown(KeyCode.Y) && Time.time>nextAttack[1] && grounded && !isShielding)){  //mid attack
             //RigidbodyConstraints2D.FreezePositionX;
             //rb.constraints = RigidbodyConstraints2D.FreezePositionX;
-            canMove = false; //arreglar
+            
             animator.SetTrigger("test");
             nextAttack[1] = Time.time+delay[1];
-            
-        } else if(Input.GetKeyUp(KeyCode.Y)){
-            wait();
+            isAttacking(); //el segundo ataque no sale, arreglar
+        
         }
 
         
-        if ((Input.GetKeyDown(KeyCode.E)) && Time.time>nextAttack[2]){  //strong attack
+        if ((Input.GetKeyDown(KeyCode.E)) && Time.time>nextAttack[2] && grounded && !isShielding){  //strong attack
+
+            isAttacking();
             animator.SetTrigger("Strong");
             nextAttack[2] = Time.time+delay[2];
             
         }
         
-        if ((Input.GetKeyDown(KeyCode.R)) && Time.time>nextAttack[0]){ //light attack
+        if ((Input.GetKeyDown(KeyCode.R)) && Time.time>nextAttack[0] && grounded && !isShielding){ //light attack
+            isAttacking();
             animator.SetTrigger("Light");
             nextAttack[0] = Time.time+delay[0];
         }
-         if ((Input.GetKeyDown(KeyCode.T))){
+         if ((Input.GetKeyDown(KeyCode.T)) && grounded && !isShielding){ //super attack
+            isAttacking();
             animator.SetTrigger("Super");
          }
-        if (Input.GetKeyDown(KeyCode.H) && grounded){
-            animator.SetBool("Shield", true);
 
+        if (Input.GetKey(KeyCode.H) && grounded){ //sheild
+            isAttacking();
+            animator.SetBool("Shield", true);
+            isShielding = true;
         }
 
         else if(Input.GetKeyUp(KeyCode.H)){
             animator.SetBool("Shield", false);
+            isShielding = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && grounded){
+        if(Input.GetKeyDown(KeyCode.Space) && grounded && !isShielding){
             rb.AddForce(jumpForce);
             grounded = false;
+            speed = 4;
             //animator.SetBool("isJumping", true);
             animator.SetTrigger("jump");
            
@@ -121,6 +133,7 @@ public class CharacterMovement : MonoBehaviour
             grounded = true;
             animator.SetBool("isJumping", false);
             animator.SetBool("jumpAttack", false);
+            speed = 7;
             
         }
     }
