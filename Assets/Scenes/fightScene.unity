@@ -1829,6 +1829,7 @@ MonoBehaviour:
   grounded: 0
   canMove: 0
   canAttack: 0
+  canJump: 0
   animator: {fileID: 356332727}
   isShielding: 0
 --- !u!61 &657534140
@@ -5815,7 +5816,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.94798666, y: -1.6248579}
+  m_Offset: {x: -1.5212128, y: -2.5993423}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5826,7 +5827,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5681375, y: 3.7472897}
+  m_Size: {x: 1.7974286, y: 3.938366}
   m_EdgeRadius: 0
 --- !u!4 &2022933404
 Transform:
@@ -5836,8 +5837,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2022933402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.54, y: 0.65, z: -1.5122821}
-  m_LocalScale: {x: 0.80251, y: 0.80251, z: 0.80251}
+  m_LocalPosition: {x: -0.31, y: 0.63, z: -1.227}
+  m_LocalScale: {x: 0.613864, y: 0.613864, z: 0.613864}
   m_Children:
   - {fileID: 2089444930}
   m_Father: {fileID: 0}
@@ -5858,9 +5859,9 @@ MonoBehaviour:
   speed: 7
   jumpForce: {x: 0, y: 600, z: 0}
   delay:
-  - 0
-  - 0
-  - 0
+  - 1
+  - 1
+  - 1
   nextAttack:
   - 0
   - 0
@@ -5868,6 +5869,7 @@ MonoBehaviour:
   grounded: 0
   canMove: 0
   canAttack: 0
+  canJump: 0
   animator: {fileID: 2089444931}
   isShielding: 0
 --- !u!50 &2022933406
@@ -5882,10 +5884,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1.5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2.35
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -6095,8 +6097,9 @@ GameObject:
   - component: {fileID: 2089444930}
   - component: {fileID: 2089444932}
   - component: {fileID: 2089444931}
+  - component: {fileID: 2089444933}
   m_Layer: 0
-  m_Name: Idle_0
+  m_Name: Ch_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6186,6 +6189,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2089444933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089444929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c3868335545ec47a2c4afb996f8210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitBox: []
 --- !u!1 &2110189118
 GameObject:
   m_ObjectHideFlags: 0

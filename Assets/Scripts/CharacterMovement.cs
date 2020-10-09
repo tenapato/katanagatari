@@ -13,7 +13,8 @@ public class CharacterMovement : MonoBehaviour
     public float [] nextAttack;
     public bool grounded;
     public bool canMove; //bool para controlar si el jugador se puede mover o no
-    public bool canAttack;
+    public bool canAttack; //bool para saber cuando se esta atacando
+    public bool canJump; // bool que evita que se bugge el salto
 
     Vector3 motion;
     Rigidbody2D rb;
@@ -24,6 +25,8 @@ public class CharacterMovement : MonoBehaviour
     public Animator animator;
 
     public bool isShielding;
+
+    
     
 
     // Start is called before the first frame update
@@ -35,6 +38,7 @@ public class CharacterMovement : MonoBehaviour
         canMove = true;
         canAttack = true;
         isShielding = false;
+        canJump = true;
         
     }
 
@@ -42,6 +46,7 @@ public class CharacterMovement : MonoBehaviour
     void isAttacking(){ //este meteodo detiene el movimiento mientras esta attackando
         motion.x = 0;
         canMove = false;
+        canJump = false;
         motion.y = rb.velocity.y;
         rb.velocity = motion;
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
@@ -65,10 +70,10 @@ public class CharacterMovement : MonoBehaviour
         rb.velocity = motion;
 
         //falta hacer las animaciones en metodos separados
-        if ((Input.GetKeyDown(KeyCode.Y) && Time.time>nextAttack[1] && grounded && !isShielding)){  //mid attack
+        if ((Input.GetButton("PS4_TRIANGLE") && Time.time>nextAttack[1] && grounded && !isShielding && canAttack)){  //mid attack
             //RigidbodyConstraints2D.FreezePositionX;
             //rb.constraints = RigidbodyConstraints2D.FreezePositionX;
-            
+            canAttack = false;
             animator.SetTrigger("test");
             nextAttack[1] = Time.time+delay[1];
             isAttacking(); //el segundo ataque no sale, arreglar
@@ -76,36 +81,38 @@ public class CharacterMovement : MonoBehaviour
         }
 
         
-        if ((Input.GetKeyDown(KeyCode.E)) && Time.time>nextAttack[2] && grounded && !isShielding){  //strong attack
-
+        if ((Input.GetButton("PS4_SQUARE")) && Time.time>nextAttack[2] && grounded && !isShielding && canAttack){  //strong attack
+            canAttack = false;
             isAttacking();
             animator.SetTrigger("Strong");
             nextAttack[2] = Time.time+delay[2];
             
         }
         
-        if ((Input.GetKeyDown(KeyCode.R)) && Time.time>nextAttack[0] && grounded && !isShielding){ //light attack
+        if ((Input.GetButton("PS4_CIRCLE")) && Time.time>nextAttack[0] && grounded && !isShielding && canAttack){ //light attack
+            canAttack = false;
             isAttacking();
             animator.SetTrigger("Light");
             nextAttack[0] = Time.time+delay[0];
         }
-         if ((Input.GetKeyDown(KeyCode.T)) && grounded && !isShielding){ //super attack
+         if ((Input.GetButton("PS4_L1")) && Time.time>nextAttack[0] && grounded && !isShielding){ //super attack
             isAttacking();
             animator.SetTrigger("Super");
+            nextAttack[0] = Time.time+delay[0];
          }
 
-        if (Input.GetKey(KeyCode.H) && grounded){ //sheild
+        if (Input.GetButton("PS4_R2") && grounded && canAttack){ //sheild
             isAttacking();
             animator.SetBool("Shield", true);
             isShielding = true;
         }
 
-        else if(Input.GetKeyUp(KeyCode.H)){
+        else if(Input.GetButtonUp("PS4_R2")){
             animator.SetBool("Shield", false);
             isShielding = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && grounded && !isShielding){
+        if(Input.GetButton("PS4_CROSS") && grounded && !isShielding && canJump){
             rb.AddForce(jumpForce);
             grounded = false;
             speed = 4;
@@ -120,10 +127,15 @@ public class CharacterMovement : MonoBehaviour
         //if(Input.GetKeyDown(KeyCode.J) && !grounded && animator.GetCurrentAnimatorStateInfo(0).IsName("jumpAttack")){
            // animator.SetBool("jumpAttack", true);
        // }
-         if(Input.GetKeyDown(KeyCode.J)){
+         if(Input.GetButton("PS4_CIRCLE") && !grounded){
              animator.SetBool("jumpAttack", true);
          }
 
+         if(Input.GetButton("PS4_R1") && grounded && Time.time>nextAttack[0]) { //Dodge
+            animator.SetTrigger("Dodge");
+            nextAttack[0] = Time.time+delay[0];
+            isAttacking();
+         }
 
     } //end of void update
 

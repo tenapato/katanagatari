@@ -11,8 +11,11 @@ public GameObject[] hitBox;
 
 public void resetMotion(){ //Este método resetea que puedan moverse despues de atacar
     transform.parent.gameObject.GetComponent < CharacterMovement >().canMove = true;
-    
+    transform.parent.gameObject.GetComponent < CharacterMovement >().canJump = true;
+    transform.parent.gameObject.GetComponent < CharacterMovement >().canAttack = true; //por ahora se puede atacar hasta que acabes el atque (PODER CANCERLAR DESPUES ??)
 }
+
+
 
 /*--------------------------------Estos metodos controlan la activacion de las hitboxes--------------------------------*/
 
