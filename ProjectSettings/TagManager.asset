@@ -42,6 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Hitbox
+    uniqueID: 4076069963
+    locked: 0
   - name: Characters
     uniqueID: 2489303271
     locked: 0

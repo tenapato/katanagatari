@@ -1,8 +1,9 @@
 ﻿
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
  
-public class CharacterMovement : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {   
     float horizontalMove = 0f;
     public float speed = 40f;
@@ -22,11 +23,44 @@ public class CharacterMovement : MonoBehaviour
 
     private bool jumpAttack;
 
+    
     public Animator animator;
 
     public bool isShielding;
 
+    public Controls control;
+    private Vector2 movementInput;
+
+    /* Estar son variables de pruebas para el co-op */
+    [SerializeField]
+    int PlayerID;
+
+
+    //ControlsManager controlsManager;
     
+    
+
+
+    /*----------------------------*/
+   
+
+    private void Awake() {
+        control = new Controls();
+        //control.Player.SetCallbacks(this);
+        this.control.Player.Jump.performed += ctx => Jump();
+        this.control.Player.Circle.performed += ctx => CircleAttack();
+        this.control.Player.Triangle.performed += ctx => TriangleAttack();
+        this.control.Player.Square.performed += ctx => SquareAttack();
+        
+    }
+
+    private void OnEnable() {
+        control.Enable();
+    }
+
+    private void OnDisable() {
+        control.Disable();
+    }
     
 
     // Start is called before the first frame update
@@ -39,6 +73,7 @@ public class CharacterMovement : MonoBehaviour
         canAttack = true;
         isShielding = false;
         canJump = true;
+        //controlsManager = FindObjectOfType<ControlsManager>();
         
     }
 
@@ -54,47 +89,26 @@ public class CharacterMovement : MonoBehaviour
 
   
     // Update is called once per frame
+    public void OnMove(InputAction.CallbackContext ctx) => movementInput = ctx.ReadValue<Vector2>(); // Esta funcion mueve al personaje
+    
+        
     void Update()
     {
 
         if(canMove){
-            motion.x = Input.GetAxisRaw("Horizontal") * speed;
-            horizontalMove = Input.GetAxisRaw("Horizontal") * speed;
-            motion.y = rb.velocity.y;
+
+            transform.Translate(new Vector3(movementInput.x,0,movementInput.y)* speed * Time.deltaTime);
+            
+            
+
+
             animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
         } 
 
 
-        
+        //rb.velocity = motion;
 
-        rb.velocity = motion;
-
-        //falta hacer las animaciones en metodos separados
-        if ((Input.GetButton("PS4_TRIANGLE") && Time.time>nextAttack[1] && grounded && !isShielding && canAttack)){  //mid attack
-            //RigidbodyConstraints2D.FreezePositionX;
-            //rb.constraints = RigidbodyConstraints2D.FreezePositionX;
-            canAttack = false;
-            animator.SetTrigger("test");
-            nextAttack[1] = Time.time+delay[1];
-            isAttacking(); //el segundo ataque no sale, arreglar
-        
-        }
-
-        
-        if ((Input.GetButton("PS4_SQUARE")) && Time.time>nextAttack[2] && grounded && !isShielding && canAttack){  //strong attack
-            canAttack = false;
-            isAttacking();
-            animator.SetTrigger("Strong");
-            nextAttack[2] = Time.time+delay[2];
-            
-        }
-        
-        if ((Input.GetButton("PS4_CIRCLE")) && Time.time>nextAttack[0] && grounded && !isShielding && canAttack){ //light attack
-            canAttack = false;
-            isAttacking();
-            animator.SetTrigger("Light");
-            nextAttack[0] = Time.time+delay[0];
-        }
+        /*
          if ((Input.GetButton("PS4_L1")) && Time.time>nextAttack[0] && grounded && !isShielding){ //super attack
             isAttacking();
             animator.SetTrigger("Super");
@@ -137,6 +151,8 @@ public class CharacterMovement : MonoBehaviour
             isAttacking();
          }
 
+    */
+
     } //end of void update
 
 
@@ -151,7 +167,38 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
+    void CircleAttack(){
+        if(Time.time>nextAttack[0] && grounded && !isShielding && canAttack){
+            this.canAttack = false;
+            this.isAttacking();
+            this.animator.SetTrigger("Light");
+            nextAttack[0] = Time.time+delay[0];
+        
+        }
+    }
+
+    void TriangleAttack(){
+        if(Time.time>nextAttack[1] && grounded && !isShielding && canAttack){
+            canAttack = false;
+            animator.SetTrigger("test");
+            nextAttack[1] = Time.time+delay[1];
+            isAttacking(); //el segundo ataque no sale, arreglar
+        }
+    }
+
+    void SquareAttack(){
+        if(Time.time>nextAttack[2] && grounded && !isShielding && canAttack){
+            canAttack = false;
+            isAttacking();
+            animator.SetTrigger("Strong");
+            nextAttack[2] = Time.time+delay[2];
+        }
+    }
+
+    void Jump(){
+
+    }
+
+
 }
 
-
-//GetKeyDown y GetKey Up

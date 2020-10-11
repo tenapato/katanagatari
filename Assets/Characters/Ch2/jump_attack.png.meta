@@ -1,19 +1,25 @@
 fileFormatVersion: 2
-guid: 877eb4231dd28f943acab4937f3604de
+guid: 2fa10718e95951c4fa692ac32a794cdc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5672869595778636664
-    second: dodge_0
+      213: -572565165175522773
+    second: jump_attack_0
   - first:
-      213: 1685754737939873486
-    second: dodge_1
+      213: -4998125277122183845
+    second: jump_attack_1
   - first:
-      213: 4459518147029533292
-    second: dodge_2
+      213: 2716225639199796534
+    second: jump_attack_2
   - first:
-      213: -4627716620307745415
-    second: dodge_3
+      213: -4991318328243823279
+    second: jump_attack_3
+  - first:
+      213: 7942527458876262006
+    second: jump_attack_4
+  - first:
+      213: -6242747582866155258
+    second: jump_attack_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -99,85 +105,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dodge_0
+      name: jump_attack_0
       rect:
         serializedVersion: 2
-        x: 154
-        y: 74
+        x: 42
+        y: 24
         width: 130
         height: 135
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8842086a82be541b0800000000000000
-      internalID: -5672869595778636664
+      spriteID: b2a33fe0407dd08f0800000000000000
+      internalID: -572565165175522773
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dodge_1
+      name: jump_attack_1
       rect:
         serializedVersion: 2
-        x: 381
-        y: 74
+        x: 273
+        y: 24
         width: 130
         height: 135
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ece765da001056710800000000000000
-      internalID: 1685754737939873486
+      spriteID: b5d3b3aaa8713aab0800000000000000
+      internalID: -4998125277122183845
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dodge_2
+      name: jump_attack_2
       rect:
         serializedVersion: 2
-        x: 614
-        y: 74
+        x: 562
+        y: 25
         width: 130
         height: 135
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c628a1f802463ed30800000000000000
-      internalID: 4459518147029533292
+      spriteID: 63def42e3d8f1b520800000000000000
+      internalID: 2716225639199796534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dodge_3
+      name: jump_attack_3
       rect:
         serializedVersion: 2
-        x: 833
-        y: 74
+        x: 852
+        y: 25
         width: 130
         height: 135
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 975b265a04c07cfb0800000000000000
-      internalID: -4627716620307745415
+      spriteID: 15d5124fc664bbab0800000000000000
+      internalID: -4991318328243823279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: jump_attack_4
+      rect:
+        serializedVersion: 2
+        x: 1157
+        y: 25
+        width: 130
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6760b1d74a6893e60800000000000000
+      internalID: 7942527458876262006
       vertices: []
       indices: 
       edges: []

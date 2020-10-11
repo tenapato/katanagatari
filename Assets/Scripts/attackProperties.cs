@@ -10,9 +10,9 @@ public class attackProperties : MonoBehaviour
 public GameObject[] hitBox;
 
 public void resetMotion(){ //Este método resetea que puedan moverse despues de atacar
-    transform.parent.gameObject.GetComponent < CharacterMovement >().canMove = true;
-    transform.parent.gameObject.GetComponent < CharacterMovement >().canJump = true;
-    transform.parent.gameObject.GetComponent < CharacterMovement >().canAttack = true; //por ahora se puede atacar hasta que acabes el atque (PODER CANCERLAR DESPUES ??)
+    transform.parent.gameObject.GetComponent < PlayerInput >().canMove = true;
+    transform.parent.gameObject.GetComponent < PlayerInput >().canJump = true;
+    transform.parent.gameObject.GetComponent < PlayerInput >().canAttack = true; //por ahora se puede atacar hasta que acabes el atque (PODER CANCERLAR DESPUES ??)
 }
 
 
