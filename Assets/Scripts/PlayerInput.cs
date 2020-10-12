@@ -24,7 +24,8 @@ public class PlayerInput : MonoBehaviour
     private bool jumpAttack;
 
     
-    public Animator animator;
+    //public Animator animator;
+    Animator animator;
 
     public bool isShielding;
 
@@ -35,7 +36,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField]
     int PlayerID;
 
-
+    float move_x;
     //ControlsManager controlsManager;
     
     
@@ -47,10 +48,22 @@ public class PlayerInput : MonoBehaviour
     private void Awake() {
         control = new Controls();
         //control.Player.SetCallbacks(this);
-        this.control.Player.Jump.performed += ctx => Jump();
-        this.control.Player.Circle.performed += ctx => CircleAttack();
-        this.control.Player.Triangle.performed += ctx => TriangleAttack();
-        this.control.Player.Square.performed += ctx => SquareAttack();
+        //var actionMap = new InputActionMap();
+
+        control.devices = new[] {Gamepad.all[PlayerID]};
+
+            this.control.Player.Jump.performed += ctx => Jump();
+            this.control.Player.Circle.performed += ctx => CircleAttack();
+            this.control.Player.Triangle.performed += ctx => TriangleAttack();
+            this.control.Player.Square.performed += ctx => SquareAttack();
+            this.control.Player.Circle.performed += ctx => JumpAttack();
+            this.control.Player.L2.performed += ctx => SuperAttack();
+            this.control.Player.R1.performed += ctx => Shield();
+            this.control.Player.R2.performed += ctx => Dodge();
+            this.control.Player.Move.performed += ctx => move_x = ctx.ReadValue<float>();
+            this.control.Player.Move.canceled += ctx => move_x = 0;
+
+        
         
     }
 
@@ -65,7 +78,9 @@ public class PlayerInput : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    {  
+        
+        animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
         grounded = true;
@@ -89,22 +104,22 @@ public class PlayerInput : MonoBehaviour
 
   
     // Update is called once per frame
-    public void OnMove(InputAction.CallbackContext ctx) => movementInput = ctx.ReadValue<Vector2>(); // Esta funcion mueve al personaje
+    //public void OnMove(InputAction.CallbackContext ctx) => movementInput = ctx.ReadValue<Vector2>(); // Esta funcion mueve al personaje
     
         
     void Update()
     {
 
-        if(canMove){
+        //if(canMove && PlayerID == 1){ // este player id es para que solo se mueva 1 personaje
 
-            transform.Translate(new Vector3(movementInput.x,0,movementInput.y)* speed * Time.deltaTime);
+            transform.Translate(new Vector3(move_x,0,0)* speed * Time.deltaTime);
             
             
 
 
-            animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
-        } 
-
+            animator.SetFloat("Speed", Mathf.Abs(move_x));
+    
+            animator.SetFloat("goingUp", rb.velocity.y);
 
         //rb.velocity = motion;
 
@@ -168,6 +183,7 @@ public class PlayerInput : MonoBehaviour
 
 
     void CircleAttack(){
+        Debug.Log(PlayerID);
         if(Time.time>nextAttack[0] && grounded && !isShielding && canAttack){
             this.canAttack = false;
             this.isAttacking();
@@ -197,6 +213,41 @@ public class PlayerInput : MonoBehaviour
 
     void Jump(){
 
+            if(grounded && !isShielding && canJump){
+            rb.AddForce(jumpForce);
+            grounded = false;
+            speed = 4;
+            //animator.SetBool("isJumping", true);
+            animator.SetTrigger("jump");
+            }
+            
+    }
+    
+    void JumpAttack(){
+        if(!grounded){
+        animator.SetBool("jumpAttack", true);
+        }
+    }
+    
+
+    void Shield(){ //se activa con R1
+        Debug.Log("I am shielding");
+    }
+    
+    void Dodge(){
+        if(grounded && Time.time>nextAttack[0]){
+        animator.SetTrigger("Dodge");
+        nextAttack[0] = Time.time+delay[0];
+        isAttacking();
+        }
+    }
+
+    void SuperAttack(){ //L2
+        if(Time.time>nextAttack[0] && grounded && !isShielding){
+        isAttacking();
+        animator.SetTrigger("Super");
+        nextAttack[0] = Time.time+delay[0];
+        }
     }
 
 

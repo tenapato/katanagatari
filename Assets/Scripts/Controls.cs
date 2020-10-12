@@ -20,9 +20,9 @@ public class @Controls : IInputActionCollection, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""e596b882-3434-461f-94ad-3ed40713433c"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -57,6 +57,38 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""R1"",
+                    ""type"": ""Button"",
+                    ""id"": ""f45bb8df-0730-4302-b27a-f32995d59d8a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""R2"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f48be15-a229-41c5-b89d-e27a16e28b08"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""L1"",
+                    ""type"": ""Button"",
+                    ""id"": ""cabed857-41a6-4ea8-82d6-74f3164f548f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""L2"",
+                    ""type"": ""Button"",
+                    ""id"": ""1652f10d-1dcc-4395-99f6-93fe00d94347"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -70,6 +102,39 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""bbbf8940-75a1-44ce-a01e-e70e66225abb"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""f4f80eed-87e3-433d-ac4b-bd32f550ec12"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""7b029738-5e63-40f4-8d47-01f8b1de2ea3"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -114,6 +179,50 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Square"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""21611d73-e349-488d-a172-47d5b674e01f"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""R1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd05b87f-c5a3-4191-a519-1fe07ea9ebeb"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""R2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c617c68c-1b58-4e3d-bf3f-f27fdc552509"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""L1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b96986b-df7f-4b5c-9a6b-0b7acd4964d8"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""L2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -127,6 +236,10 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_Circle = m_Player.FindAction("Circle", throwIfNotFound: true);
         m_Player_Triangle = m_Player.FindAction("Triangle", throwIfNotFound: true);
         m_Player_Square = m_Player.FindAction("Square", throwIfNotFound: true);
+        m_Player_R1 = m_Player.FindAction("R1", throwIfNotFound: true);
+        m_Player_R2 = m_Player.FindAction("R2", throwIfNotFound: true);
+        m_Player_L1 = m_Player.FindAction("L1", throwIfNotFound: true);
+        m_Player_L2 = m_Player.FindAction("L2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -181,6 +294,10 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Circle;
     private readonly InputAction m_Player_Triangle;
     private readonly InputAction m_Player_Square;
+    private readonly InputAction m_Player_R1;
+    private readonly InputAction m_Player_R2;
+    private readonly InputAction m_Player_L1;
+    private readonly InputAction m_Player_L2;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -190,6 +307,10 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Circle => m_Wrapper.m_Player_Circle;
         public InputAction @Triangle => m_Wrapper.m_Player_Triangle;
         public InputAction @Square => m_Wrapper.m_Player_Square;
+        public InputAction @R1 => m_Wrapper.m_Player_R1;
+        public InputAction @R2 => m_Wrapper.m_Player_R2;
+        public InputAction @L1 => m_Wrapper.m_Player_L1;
+        public InputAction @L2 => m_Wrapper.m_Player_L2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -214,6 +335,18 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Square.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSquare;
                 @Square.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSquare;
                 @Square.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSquare;
+                @R1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnR1;
+                @R1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnR1;
+                @R1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnR1;
+                @R2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnR2;
+                @R2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnR2;
+                @R2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnR2;
+                @L1.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL1;
+                @L1.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL1;
+                @L1.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL1;
+                @L2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL2;
+                @L2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL2;
+                @L2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL2;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -233,6 +366,18 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Square.started += instance.OnSquare;
                 @Square.performed += instance.OnSquare;
                 @Square.canceled += instance.OnSquare;
+                @R1.started += instance.OnR1;
+                @R1.performed += instance.OnR1;
+                @R1.canceled += instance.OnR1;
+                @R2.started += instance.OnR2;
+                @R2.performed += instance.OnR2;
+                @R2.canceled += instance.OnR2;
+                @L1.started += instance.OnL1;
+                @L1.performed += instance.OnL1;
+                @L1.canceled += instance.OnL1;
+                @L2.started += instance.OnL2;
+                @L2.performed += instance.OnL2;
+                @L2.canceled += instance.OnL2;
             }
         }
     }
@@ -244,5 +389,9 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnCircle(InputAction.CallbackContext context);
         void OnTriangle(InputAction.CallbackContext context);
         void OnSquare(InputAction.CallbackContext context);
+        void OnR1(InputAction.CallbackContext context);
+        void OnR2(InputAction.CallbackContext context);
+        void OnL1(InputAction.CallbackContext context);
+        void OnL2(InputAction.CallbackContext context);
     }
 }

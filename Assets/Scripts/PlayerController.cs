@@ -1,6 +1,7 @@
 ﻿
 /*---------------SCRIPT PARA  PROBAR LOS NUEVOS INPUTS-------------*/
 
+/*
 
 using System.Collections;
 using System.Collections.Generic;
@@ -54,3 +55,4 @@ public class PlayerController : MonoBehaviour
 
 
 }
+ */
