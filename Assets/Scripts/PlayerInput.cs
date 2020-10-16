@@ -39,7 +39,8 @@ public class PlayerInput : MonoBehaviour
     float move_x;
     //ControlsManager controlsManager;
     
-    
+    public bool canActivateSuper;
+    //public bool superActivated;
 
 
     /*----------------------------*/
@@ -59,6 +60,7 @@ public class PlayerInput : MonoBehaviour
             this.control.Player.Circle.performed += ctx => JumpAttack();
             this.control.Player.L2.performed += ctx => SuperAttack();
             this.control.Player.R1.performed += ctx => Shield();
+            this.control.Player.R1.canceled += ctx => ShieldDrop();
             this.control.Player.R2.performed += ctx => Dodge();
             this.control.Player.Move.performed += ctx => move_x = ctx.ReadValue<float>();
             this.control.Player.Move.canceled += ctx => move_x = 0;
@@ -89,7 +91,8 @@ public class PlayerInput : MonoBehaviour
         isShielding = false;
         canJump = true;
         //controlsManager = FindObjectOfType<ControlsManager>();
-        
+        canActivateSuper = false;
+        //superActivated = false;
     }
 
 
@@ -111,9 +114,9 @@ public class PlayerInput : MonoBehaviour
     {
 
         //if(canMove && PlayerID == 1){ // este player id es para que solo se mueva 1 personaje
-
-            transform.Translate(new Vector3(move_x,0,0)* speed * Time.deltaTime);
-            
+            if(canMove && !isShielding){
+                transform.Translate(new Vector3(move_x,0,0)* speed * Time.deltaTime);
+            }
             
 
 
@@ -121,52 +124,7 @@ public class PlayerInput : MonoBehaviour
     
             animator.SetFloat("goingUp", rb.velocity.y);
 
-        //rb.velocity = motion;
-
-        /*
-         if ((Input.GetButton("PS4_L1")) && Time.time>nextAttack[0] && grounded && !isShielding){ //super attack
-            isAttacking();
-            animator.SetTrigger("Super");
-            nextAttack[0] = Time.time+delay[0];
-         }
-
-        if (Input.GetButton("PS4_R2") && grounded && canAttack){ //sheild
-            isAttacking();
-            animator.SetBool("Shield", true);
-            isShielding = true;
-        }
-
-        else if(Input.GetButtonUp("PS4_R2")){
-            animator.SetBool("Shield", false);
-            isShielding = false;
-        }
-
-        if(Input.GetButton("PS4_CROSS") && grounded && !isShielding && canJump){
-            rb.AddForce(jumpForce);
-            grounded = false;
-            speed = 4;
-            //animator.SetBool("isJumping", true);
-            animator.SetTrigger("jump");
-           
-        }
     
-     
-         animator.SetFloat("goingUp", rb.velocity.y);
-
-        //if(Input.GetKeyDown(KeyCode.J) && !grounded && animator.GetCurrentAnimatorStateInfo(0).IsName("jumpAttack")){
-           // animator.SetBool("jumpAttack", true);
-       // }
-         if(Input.GetButton("PS4_CIRCLE") && !grounded){
-             animator.SetBool("jumpAttack", true);
-         }
-
-         if(Input.GetButton("PS4_R1") && grounded && Time.time>nextAttack[0]) { //Dodge
-            animator.SetTrigger("Dodge");
-            nextAttack[0] = Time.time+delay[0];
-            isAttacking();
-         }
-
-    */
 
     } //end of void update
 
@@ -231,7 +189,20 @@ public class PlayerInput : MonoBehaviour
     
 
     void Shield(){ //se activa con R1
-        Debug.Log("I am shielding");
+        if(grounded && canAttack){
+        //sAttacking();
+        
+        canMove = false;
+        canJump = false;
+        animator.SetBool("Shield", true);
+        isShielding = true;
+        }
+    }
+    void ShieldDrop(){
+        animator.SetBool("Shield", false);
+        canMove = true;
+        canJump = true;
+        isShielding = false;
     }
     
     void Dodge(){
@@ -242,11 +213,18 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    
     void SuperAttack(){ //L2
-        if(Time.time>nextAttack[0] && grounded && !isShielding){
+        if(Time.time>nextAttack[0] && grounded && !isShielding && canActivateSuper){
+        canActivateSuper = false;
         isAttacking();
         animator.SetTrigger("Super");
         nextAttack[0] = Time.time+delay[0];
+
+        if(!canActivateSuper){
+            gameObject.GetComponent<PowerBar>().superActivated = true;
+        }
+
         }
     }
 
