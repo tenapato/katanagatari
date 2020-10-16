@@ -100,7 +100,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.5833333
-    functionName: activateHitboxHeavy
+    functionName: DamageHeavy
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -108,13 +108,6 @@ AnimationClip:
     messageOptions: 0
   - time: 0.6666667
     functionName: resetMotion
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.6666667
-    functionName: turnoffHitbox
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
