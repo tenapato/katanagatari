@@ -11,16 +11,19 @@ public class Health : MonoBehaviour
     public Slider healthBar;
     bool display = false;
     Animator animator;
+    public AudioSource getHit;
 
     //public Slider powerBar;
-
-
+    public AudioClip hit;
+    Vector3 knockback;
+    Rigidbody2D rb;
 
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         if(healthBar != null){
             healthBar.maxValue = maxHealth;
@@ -34,6 +37,19 @@ public class Health : MonoBehaviour
         if(display){
             healthBar.value = currentHealth;
             animator.SetTrigger("TakeHit");
+            gameObject.GetComponent<PlayerInput>().canAttack = false;
+            gameObject.GetComponent<PlayerInput>().isAttacking();
+            //Esta parte controla el knockback dependiendo del daño que reciba
+            if(amount == 20){ //Heavy Hit Knockback
+                knockback.x = 500;
+                rb.AddForce(knockback);
+            }else if(amount == 10){ // Long Hit Knockback
+                knockback.x = 200;
+                rb.AddForce(knockback);
+            }
+            
+            
+            getHit.PlayOneShot(hit);//arreglar que suene cuando te golpean
 
             //Agregar que mientras te esten pegando no te puedas mover
         }

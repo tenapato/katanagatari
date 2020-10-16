@@ -42,7 +42,7 @@ public class PlayerInput : MonoBehaviour
     public bool canActivateSuper;
     //public bool superActivated;
 
-
+    public AudioSource audio;
     /*----------------------------*/
    
 
@@ -96,7 +96,7 @@ public class PlayerInput : MonoBehaviour
     }
 
 
-    void isAttacking(){ //este meteodo detiene el movimiento mientras esta attackando
+    public void isAttacking(){ //este meteodo detiene el movimiento mientras esta attackando
         motion.x = 0;
         canMove = false;
         canJump = false;
@@ -147,6 +147,7 @@ public class PlayerInput : MonoBehaviour
             this.isAttacking();
             this.animator.SetTrigger("Light");
             nextAttack[0] = Time.time+delay[0];
+            audio.Play();
         
         }
     }
@@ -157,6 +158,7 @@ public class PlayerInput : MonoBehaviour
             animator.SetTrigger("test");
             nextAttack[1] = Time.time+delay[1];
             isAttacking(); //el segundo ataque no sale, arreglar
+            audio.Play();
         }
     }
 
@@ -166,6 +168,7 @@ public class PlayerInput : MonoBehaviour
             isAttacking();
             animator.SetTrigger("Strong");
             nextAttack[2] = Time.time+delay[2];
+            audio.Play();
         }
     }
 
@@ -184,6 +187,7 @@ public class PlayerInput : MonoBehaviour
     void JumpAttack(){
         if(!grounded){
         animator.SetBool("jumpAttack", true);
+        audio.Play();
         }
     }
     
