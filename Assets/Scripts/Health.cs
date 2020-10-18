@@ -17,6 +17,7 @@ public class Health : MonoBehaviour
     public AudioClip hit;
     Vector3 knockback;
     Rigidbody2D rb;
+    public bool isShielding;
 
 
     // Start is called before the first frame update
@@ -24,6 +25,7 @@ public class Health : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        isShielding = false;
         currentHealth = maxHealth;
         if(healthBar != null){
             healthBar.maxValue = maxHealth;
@@ -33,8 +35,18 @@ public class Health : MonoBehaviour
     }
 
     public void TakeDamage(int amount){
-        currentHealth -= amount;
+
+        if(isShielding){
+            return;
+        }
+       
+             currentHealth -= amount;
+         
+
+
+        
         if(display){
+            
             healthBar.value = currentHealth;
             animator.SetTrigger("TakeHit");
             gameObject.GetComponent<PlayerInput>().canAttack = false;
@@ -45,6 +57,9 @@ public class Health : MonoBehaviour
                 rb.AddForce(knockback);
             }else if(amount == 10){ // Long Hit Knockback
                 knockback.x = 200;
+                rb.AddForce(knockback);
+            }else if(amount == 50){// super attack knockback
+                knockback.x = 700;
                 rb.AddForce(knockback);
             }
             
@@ -57,6 +72,8 @@ public class Health : MonoBehaviour
             Debug.Log("Oponent Died");
             animator.SetTrigger("Died");
             animator.SetBool("Death", true);
+            gameObject.GetComponent<PlayerInput>().dead = true;
+            //isShielding = gameObject.GetComponent<AttackDamageV2>().isShielding;
         }
     }
 

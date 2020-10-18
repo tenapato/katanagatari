@@ -12,6 +12,21 @@ public class PowerBar : MonoBehaviour
     private int count;
     private bool full;
     public bool superActivated;
+
+    public AudioClip gettingPower1;
+    public AudioClip gettingPower2;
+    public AudioClip gettingPower3;
+    public AudioClip gettingPower4;
+    public AudioClip launchPower;
+
+    public AudioSource audio;
+
+    public GameObject power;
+    
+    
+
+
+
     // Start is called before the first frame update
     void Start()
     {   
@@ -28,14 +43,29 @@ public class PowerBar : MonoBehaviour
         
         if(powerBar.value >= maxValue){
             gameObject.GetComponent<PlayerInput>().canActivateSuper = true;
-            
+            power.SetActive(true);
             count++;
+            if(count == 1){
+                int r = Random.Range(1, 4);
+                if(r == 1){
+                    audio.PlayOneShot(gettingPower1);
+                } else if(r == 2){
+                    audio.PlayOneShot(gettingPower2);
+                
+                } else if(r == 3){
+                    audio.PlayOneShot(gettingPower3);
+                
+                } else if(r == 4){
+                    audio.PlayOneShot(gettingPower4);
+                }
+            }
             
             if(superActivated){
                 powerBar.value = 0;
                 full = false;
+                audio.PlayOneShot(launchPower);
                 gameObject.GetComponent<PlayerInput>().canActivateSuper = false;
-            
+                power.SetActive(false);
             }
 
 

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - impact
+  - Cursor
+  - Ch1
+  - Ch2
   layers:
   - Default
   - TransparentFX

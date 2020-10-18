@@ -15,6 +15,7 @@ public class AttackDamageV2 : MonoBehaviour
     public int [] Damage;
 
     Collider2D _collider;
+    public bool isShielding = false;
 
     //public float thrust;
     //public Vector3 knockback;
@@ -51,10 +52,14 @@ public class AttackDamageV2 : MonoBehaviour
 
     public void Shield(){
         transform.parent.gameObject.layer = LayerMask.NameToLayer("Default");
+        //isShielding = true;
+        gameObject.GetComponent<Health>().isShielding = true;
     }
 
     public void UnShield(){
         transform.parent.gameObject.layer = LayerMask.NameToLayer("Player");
+        //isShielding = false;
+        gameObject.GetComponent<Health>().isShielding = false;
     }
 
 

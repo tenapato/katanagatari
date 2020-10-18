@@ -44,6 +44,8 @@ public class PlayerInput : MonoBehaviour
 
     public AudioSource audio;
     /*----------------------------*/
+
+    public bool dead;
    
 
     private void Awake() {
@@ -93,6 +95,7 @@ public class PlayerInput : MonoBehaviour
         //controlsManager = FindObjectOfType<ControlsManager>();
         canActivateSuper = false;
         //superActivated = false;
+        dead = false;
     }
 
 
@@ -112,7 +115,7 @@ public class PlayerInput : MonoBehaviour
         
     void Update()
     {
-
+            if(!dead){
         //if(canMove && PlayerID == 1){ // este player id es para que solo se mueva 1 personaje
             if(canMove && !isShielding){
                 transform.Translate(new Vector3(move_x,0,0)* speed * Time.deltaTime);
@@ -124,7 +127,7 @@ public class PlayerInput : MonoBehaviour
     
             animator.SetFloat("goingUp", rb.velocity.y);
 
-    
+            }
 
     } //end of void update
 
@@ -142,7 +145,7 @@ public class PlayerInput : MonoBehaviour
 
     void CircleAttack(){
         Debug.Log(PlayerID);
-        if(Time.time>nextAttack[0] && grounded && !isShielding && canAttack){
+        if(Time.time>nextAttack[0] && grounded && !isShielding && canAttack && !dead){
             this.canAttack = false;
             this.isAttacking();
             this.animator.SetTrigger("Light");
@@ -153,7 +156,7 @@ public class PlayerInput : MonoBehaviour
     }
 
     void TriangleAttack(){
-        if(Time.time>nextAttack[1] && grounded && !isShielding && canAttack){
+        if(Time.time>nextAttack[1] && grounded && !isShielding && canAttack && !dead){
             canAttack = false;
             animator.SetTrigger("test");
             nextAttack[1] = Time.time+delay[1];
@@ -163,7 +166,7 @@ public class PlayerInput : MonoBehaviour
     }
 
     void SquareAttack(){
-        if(Time.time>nextAttack[2] && grounded && !isShielding && canAttack){
+        if(Time.time>nextAttack[2] && grounded && !isShielding && canAttack && !dead){
             canAttack = false;
             isAttacking();
             animator.SetTrigger("Strong");
@@ -174,7 +177,7 @@ public class PlayerInput : MonoBehaviour
 
     void Jump(){
 
-            if(grounded && !isShielding && canJump){
+            if(grounded && !isShielding && canJump && !dead){
             rb.AddForce(jumpForce);
             grounded = false;
             speed = 4;
@@ -185,7 +188,7 @@ public class PlayerInput : MonoBehaviour
     }
     
     void JumpAttack(){
-        if(!grounded){
+        if(!grounded && !dead){
         animator.SetBool("jumpAttack", true);
         audio.Play();
         }
@@ -193,7 +196,7 @@ public class PlayerInput : MonoBehaviour
     
 
     void Shield(){ //se activa con R1
-        if(grounded && canAttack){
+        if(grounded && canAttack && !dead){
         //sAttacking();
         
         canMove = false;
@@ -210,7 +213,7 @@ public class PlayerInput : MonoBehaviour
     }
     
     void Dodge(){
-        if(grounded && Time.time>nextAttack[0]){
+        if(grounded && Time.time>nextAttack[0] && !dead){
         animator.SetTrigger("Dodge");
         nextAttack[0] = Time.time+delay[0];
         isAttacking();
@@ -219,7 +222,7 @@ public class PlayerInput : MonoBehaviour
 
     
     void SuperAttack(){ //L2
-        if(Time.time>nextAttack[0] && grounded && !isShielding && canActivateSuper){
+        if(Time.time>nextAttack[0] && grounded && !isShielding && canActivateSuper && !dead){
         canActivateSuper = false;
         isAttacking();
         animator.SetTrigger("Super");
