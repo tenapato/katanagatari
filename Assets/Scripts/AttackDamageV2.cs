@@ -17,8 +17,12 @@ public class AttackDamageV2 : MonoBehaviour
     Collider2D _collider;
     public bool isShielding = false;
 
+    int PlayerID;
     //public float thrust;
     //public Vector3 knockback;
+
+    
+
     public void DamageHeavy(){
        DamageType(1);
     }  
@@ -44,22 +48,36 @@ public class AttackDamageV2 : MonoBehaviour
 
     public void Dodge(){
         //_collider.enabled = false;
-        transform.parent.gameObject.layer = LayerMask.NameToLayer("Default");
+        //transform.parent.gameObject.layer = LayerMask.NameToLayer("Default");
+        transform.parent.gameObject.GetComponent<Health>().Dodging = true;
     }
     public void unDodge(){
-        transform.parent.gameObject.layer = LayerMask.NameToLayer("Player");
+        transform.parent.gameObject.GetComponent<Health>().Dodging = false;
+       // transform.parent.gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
     public void Shield(){
-        transform.parent.gameObject.layer = LayerMask.NameToLayer("Default");
+
+        //DamageType(7);
+        //transform.parent.gameObject.layer = LayerMask.NameToLayer("Default");
+        
         //isShielding = true;
-        gameObject.GetComponent<Health>().isShielding = true;
+        transform.parent.gameObject.GetComponent<Health>().isShielding = true;
     }
 
-    public void UnShield(){
-        transform.parent.gameObject.layer = LayerMask.NameToLayer("Player");
-        //isShielding = false;
-        gameObject.GetComponent<Health>().isShielding = false;
+    public void UnShield(){ //falta regresar a la layer de Player1 y Player2
+    /*
+        Debug.Log(PlayerID);
+        if(PlayerID == 0){
+            transform.parent.gameObject.layer = LayerMask.NameToLayer("Player1");
+        }
+        if(PlayerID == 1){
+            transform.parent.gameObject.layer = LayerMask.NameToLayer("Player2");
+        }
+        
+        //isShielding = false;*/
+        
+        transform.parent.gameObject.GetComponent<Health>().isShielding = false;
     }
 
 
@@ -101,6 +119,6 @@ public class AttackDamageV2 : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         _collider = transform.parent.gameObject.GetComponent<Collider2D>();
        // rb = transform.parent.gameObject.GetComponent<Rigidbody2D>();
-        
+        PlayerID = this.gameObject.GetComponent<PlayerInput>().PlayerID;
     }   
 }

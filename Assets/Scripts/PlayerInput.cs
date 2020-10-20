@@ -34,7 +34,7 @@ public class PlayerInput : MonoBehaviour
 
     /* Estar son variables de pruebas para el co-op */
     [SerializeField]
-    int PlayerID;
+    public int PlayerID;
 
     float move_x;
     //ControlsManager controlsManager;
@@ -47,6 +47,10 @@ public class PlayerInput : MonoBehaviour
 
     public bool dead;
    
+    public Transform Oponent;
+    public Transform Player;
+
+    public bool FacingRight;
 
     private void Awake() {
         control = new Controls();
@@ -96,6 +100,17 @@ public class PlayerInput : MonoBehaviour
         canActivateSuper = false;
         //superActivated = false;
         dead = false;
+
+        //Esto sirve para inicializar el knockback
+        float distance = Oponent.position.x - Player.position.x;
+        if(distance > 0){
+            FacingRight = true;
+           gameObject.GetComponent<Health>().facingLeft = false;
+        }
+        if(distance < 0){
+             gameObject.GetComponent<Health>().facingLeft = true;
+        }
+        //**************************************************************/
     }
 
 
@@ -118,7 +133,37 @@ public class PlayerInput : MonoBehaviour
             if(!dead){
         //if(canMove && PlayerID == 1){ // este player id es para que solo se mueva 1 personaje
             if(canMove && !isShielding){
-                transform.Translate(new Vector3(move_x,0,0)* speed * Time.deltaTime);
+               float distance = Oponent.position.x - Player.position.x;  //esto calcula la distancia entre tu y tu oponente para que siempre se esten volteando a ver
+                if(distance > 0 && !FacingRight){
+                    //transform.Rotate(0, 180, 0);
+                    //transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+                    transform.RotateAround(Player.position, Vector3.up, 180);
+                    FacingRight = !FacingRight;
+                    gameObject.GetComponent<Health>().facingLeft = false;
+                }
+                if(distance < 0 && FacingRight){
+                    //transform.Rotate(0, 180, 0);
+                    //transform.localScale = new Vector3(-0.5f,0.5f,0.5f);
+                    transform.RotateAround(Player.position, Vector3.up, 180);
+                    FacingRight = !FacingRight;
+                    gameObject.GetComponent<Health>().facingLeft = true;
+                }
+                
+                if(FacingRight && PlayerID == 0){
+                    transform.Translate(new Vector3(move_x,0,0)* speed * Time.deltaTime);
+                }
+                if(!FacingRight && PlayerID == 0){
+                    transform.Translate(new Vector3(-move_x,0,0)* speed * Time.deltaTime);
+                }
+                if(FacingRight && PlayerID == 1){
+                    transform.Translate(new Vector3(-move_x,0,0)* speed * Time.deltaTime);
+                }
+                if(!FacingRight && PlayerID == 1){
+                    transform.Translate(new Vector3(move_x,0,0)* speed * Time.deltaTime);
+                }
+                
+                 //transform.Translate(new Vector3(move_x,0,0)* speed * Time.deltaTime);
+                
             }
             
 
