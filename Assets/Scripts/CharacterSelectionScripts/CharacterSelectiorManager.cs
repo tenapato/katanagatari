@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
 public class CharacterSelectiorManager : MonoBehaviour
 {   
     public bool characterIsSelected = false;
@@ -36,3 +36,4 @@ public class CharacterSelectiorManager : MonoBehaviour
         // ch2 = GameObject.Find("Ch2");
     }
 }
+*/
