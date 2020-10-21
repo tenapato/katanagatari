@@ -1,39 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*
+using UnityEngine.UI;
 public class CharacterSelectiorManager : MonoBehaviour
 {   
-    public bool characterIsSelected = false;
+    public GameObject P1Image;
+    public GameObject P2Image;
+    public GameObject P1Cursor;
+    public GameObject P2Cursor;
 
-    public int CharId;
-    GameObject go;
-   // GameObject ch1;
-   // GameObject ch2;
-    
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if(col.gameObject.CompareTag("Cursor") && CharId == 1){
-            
-            go.GetComponent<CursorMovement>().characterIsSelected = true;
-            Debug.Log("first char ");
-
-        }
-
-        if(col.gameObject.CompareTag("Cursor") && CharId == 2){
-            
-            go.GetComponent<CursorMovement>().characterIsSelected = true;
-            Debug.Log("second char ");
-
-        }
-        
-    }
+    public int charID;
 
 
+    public GameObject button;
     private void Start() {
-         go = GameObject.Find("CursorP1");
-        // ch1 = GameObject.Find("Ch1");
-        // ch2 = GameObject.Find("Ch2");
+        PlayerPrefs.DeleteKey("Player1");
+        PlayerPrefs.DeleteKey("Player1Char");
+        PlayerPrefs.DeleteKey("Player2");
+        PlayerPrefs.DeleteKey("Player2Char");
+        P1Image.SetActive(false);
+        P2Image.SetActive(false);
+    }
+    private void Update() {
+          if(PlayerPrefs.HasKey("Player1Char")){
+                charID = PlayerPrefs.GetInt("Player1Char");
+                P1Cursor.SetActive(false);
+                if(charID == 1){
+                    P1Image.SetActive(true);
+                }
+                if(charID == 2){
+                    //Poner la imagen del otro personaje
+                }
+                
+        }
+        if(PlayerPrefs.HasKey("Player2Char")){
+                P2Cursor.SetActive(false);
+                charID = PlayerPrefs.GetInt("Player1Char");
+                if(charID == 1){
+                    P2Image.SetActive(true);
+                }
+                if(charID == 2){
+                    //Poner la imagen del otro personaje
+                }
+        
+        }
+        if(PlayerPrefs.HasKey("Player1Char") && PlayerPrefs.HasKey("Player2Char")){
+            button.SetActive(true);
+        }
+        if(PlayerPrefs.HasKey("Player1Char") == false){
+                P1Cursor.SetActive(true);
+               
+        }
     }
 }
-*/

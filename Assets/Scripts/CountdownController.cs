@@ -8,22 +8,50 @@ public class CountdownController : MonoBehaviour
 
     public int countdownTime;
     public Text countdownDisplay;
+    public int startTime;
+    public Text startDisplay;
+    public GameObject goDisplay;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(roundTimer());
+        PlayerPrefs.SetInt("canPlay", 0);
+        StartCoroutine(startTimer());
+        
+        
+        
     }
 
     IEnumerator roundTimer(){
         while(countdownTime > 0){
             countdownDisplay.text = countdownTime.ToString();
+            
+            yield return new WaitForSeconds(1f);
+            goDisplay.SetActive(false);
+            
+            countdownTime--;
+        }
+    }
+    
+    IEnumerator startTimer(){
+        while (startTime > 0)
+        {
+            startDisplay.text = startTime.ToString();
 
             yield return new WaitForSeconds(1f);
 
-            countdownTime--;
+            startTime--;
+        }
+
+        if(startTime <= 1){
+            startDisplay.text = "GO!";
+            //startDisplay.SetActive(false);
+            goDisplay.SetActive(true);
+            PlayerPrefs.SetInt("canPlay", 1);
+            StartCoroutine(roundTimer());
+            
         }
     }
 }

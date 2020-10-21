@@ -52,6 +52,10 @@ public class PlayerInput : MonoBehaviour
 
     public bool FacingRight;
 
+    public int test;
+
+    public int canPlay;
+
     private void Awake() {
         control = new Controls();
         //control.Player.SetCallbacks(this);
@@ -87,7 +91,9 @@ public class PlayerInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {  
-        
+        canPlay = 0;
+       test = PlayerPrefs.GetInt("Player1Char");
+        Debug.Log("Player1 char:" + test);
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
@@ -130,6 +136,9 @@ public class PlayerInput : MonoBehaviour
         
     void Update()
     {
+
+        canPlay = PlayerPrefs.GetInt("canPlay");
+        if(canPlay == 1){
             if(!dead){
         //if(canMove && PlayerID == 1){ // este player id es para que solo se mueva 1 personaje
             if(canMove && !isShielding){
@@ -173,7 +182,7 @@ public class PlayerInput : MonoBehaviour
             animator.SetFloat("goingUp", rb.velocity.y);
 
             }
-
+        }
     } //end of void update
 
 
@@ -190,7 +199,7 @@ public class PlayerInput : MonoBehaviour
 
     void CircleAttack(){
         Debug.Log(PlayerID);
-        if(Time.time>nextAttack[0] && grounded && !isShielding && canAttack && !dead){
+        if(Time.time>nextAttack[0] && grounded && !isShielding && canAttack && !dead && canPlay == 1){
             this.canAttack = false;
             this.isAttacking();
             this.animator.SetTrigger("Light");
@@ -201,7 +210,7 @@ public class PlayerInput : MonoBehaviour
     }
 
     void TriangleAttack(){
-        if(Time.time>nextAttack[1] && grounded && !isShielding && canAttack && !dead){
+        if(Time.time>nextAttack[1] && grounded && !isShielding && canAttack && !dead && canPlay == 1){
             canAttack = false;
             animator.SetTrigger("test");
             nextAttack[1] = Time.time+delay[1];
@@ -211,7 +220,7 @@ public class PlayerInput : MonoBehaviour
     }
 
     void SquareAttack(){
-        if(Time.time>nextAttack[2] && grounded && !isShielding && canAttack && !dead){
+        if(Time.time>nextAttack[2] && grounded && !isShielding && canAttack && !dead && canPlay == 1){
             canAttack = false;
             isAttacking();
             animator.SetTrigger("Strong");
@@ -222,7 +231,7 @@ public class PlayerInput : MonoBehaviour
 
     void Jump(){
 
-            if(grounded && !isShielding && canJump && !dead){
+            if(grounded && !isShielding && canJump && !dead && canPlay == 1){
             rb.AddForce(jumpForce);
             grounded = false;
             speed = 4;
@@ -241,7 +250,7 @@ public class PlayerInput : MonoBehaviour
     
 
     void Shield(){ //se activa con R1
-        if(grounded && canAttack && !dead){
+        if(grounded && canAttack && !dead && canPlay == 1){
         //sAttacking();
         
         canMove = false;
@@ -258,7 +267,7 @@ public class PlayerInput : MonoBehaviour
     }
     
     void Dodge(){
-        if(grounded && Time.time>nextAttack[0] && !dead){
+        if(grounded && Time.time>nextAttack[0] && !dead && canPlay == 1){
         animator.SetTrigger("Dodge");
         nextAttack[0] = Time.time+delay[0];
         isAttacking();

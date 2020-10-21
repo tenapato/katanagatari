@@ -9,6 +9,7 @@ TagManager:
   - Cursor
   - Ch1
   - Ch2
+  - BgMusic
   layers:
   - Default
   - TransparentFX

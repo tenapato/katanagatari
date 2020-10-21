@@ -19,6 +19,9 @@ public class CursorMovement : MonoBehaviour {
 
     Camera cam;
 
+    
+    
+
     //GameObject cursor;
 
     private void Start() {
@@ -32,6 +35,7 @@ public class CursorMovement : MonoBehaviour {
         
         transform.Translate(new Vector3(x,y,0)* speed * Time.deltaTime);
         
+      
         
 
     }
@@ -44,6 +48,7 @@ public class CursorMovement : MonoBehaviour {
         this.ccontrol.Cursor.MoveUPDOWN.performed += ctx => y = ctx.ReadValue<float>();
         this.ccontrol.Cursor.MoveUPDOWN.canceled += ctx => y = ctx.ReadValue<float>();
         this.ccontrol.Cursor.Cross.performed += ctx => SelectCharacter();
+       // this.ccontrol.Cursor.Circle.performed += ctx => DeSelectCharacter();
 
        
     }
@@ -89,6 +94,14 @@ public class CursorMovement : MonoBehaviour {
             }
             if(hit.collider.tag == "Ch2"){
                 Debug.Log("Seleccionaste al personaje 2");
+                if(PlayerID == 0){ //Este if define el personaje y el id del player 1
+                    PlayerPrefs.SetInt("Player1", 0);
+                    PlayerPrefs.SetInt("Player1Char", 2);
+                }
+                if(PlayerID == 1){ //Este if define el personaje y el id del player 2
+                    PlayerPrefs.SetInt("Player2", 0);
+                    PlayerPrefs.SetInt("Player2Char", 2);
+                }
             }
             
 
@@ -98,5 +111,22 @@ public class CursorMovement : MonoBehaviour {
 
 
     }
+
+
+/*
+    public void DeSelectCharacter(){
+        
+        if(PlayerPrefs.HasKey("Player1Char")){
+           // gameObject.GetComponent<CharacterSelectiorManager>().P1Cursor.SetActive(true);
+            PlayerPrefs.DeleteKey("Player1");
+            PlayerPrefs.DeleteKey("Player1Char");
+        }
+      /*  if(PlayerPrefs.HasKey("Player2Char")){
+            PlayerPrefs.DeleteKey("Player2");
+            PlayerPrefs.DeleteKey("Player2Char");
+        } 
+    } */
+
+
 
 }
