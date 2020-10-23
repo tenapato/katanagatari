@@ -22,6 +22,7 @@ public class Health : MonoBehaviour
     public bool facingLeft;
 
     public bool Dodging;
+    public AudioSource deathAudio;
 
 
     // Start is called before the first frame update
@@ -56,7 +57,8 @@ public class Health : MonoBehaviour
             //Esta parte controla el knockback dependiendo del daño que reciba  
             if(facingLeft){
                 if(amount == 20){ //Heavy Hit Knockback
-                    knockback.x = 500;
+                    knockback.x = 300;
+                    knockback.y = 500;
                     rb.AddForce(knockback);
                 }else if(amount == 10){ // Long Hit Knockback
                     knockback.x = 200;
@@ -99,6 +101,7 @@ public class Health : MonoBehaviour
         }
         }//end of doging
         if(currentHealth <= 0){
+            deathAudio.Play();
             Debug.Log("Oponent Died");
             animator.SetTrigger("Died");
             animator.SetBool("Death", true);

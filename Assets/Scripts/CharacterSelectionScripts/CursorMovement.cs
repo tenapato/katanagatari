@@ -18,6 +18,8 @@ public class CursorMovement : MonoBehaviour {
     public bool characterIsSelected = false;
 
     Camera cam;
+    public AudioSource audio;
+    
 
     
     
@@ -48,7 +50,7 @@ public class CursorMovement : MonoBehaviour {
         this.ccontrol.Cursor.MoveUPDOWN.performed += ctx => y = ctx.ReadValue<float>();
         this.ccontrol.Cursor.MoveUPDOWN.canceled += ctx => y = ctx.ReadValue<float>();
         this.ccontrol.Cursor.Cross.performed += ctx => SelectCharacter();
-       // this.ccontrol.Cursor.Circle.performed += ctx => DeSelectCharacter();
+        this.ccontrol.Cursor.Circle.performed += ctx => DeSelectCharacter();
 
        
     }
@@ -86,10 +88,12 @@ public class CursorMovement : MonoBehaviour {
                 if(PlayerID == 0){ //Este if define el personaje y el id del player 1
                     PlayerPrefs.SetInt("Player1", 0);
                     PlayerPrefs.SetInt("Player1Char", 1);
+                    audio.Play();
                 }
                 if(PlayerID == 1){ //Este if define el personaje y el id del player 2
-                    PlayerPrefs.SetInt("Player2", 0);
+                    PlayerPrefs.SetInt("Player2", 1);
                     PlayerPrefs.SetInt("Player2Char", 1);
+                    audio.Play();
                 }
             }
             if(hit.collider.tag == "Ch2"){
@@ -99,7 +103,7 @@ public class CursorMovement : MonoBehaviour {
                     PlayerPrefs.SetInt("Player1Char", 2);
                 }
                 if(PlayerID == 1){ //Este if define el personaje y el id del player 2
-                    PlayerPrefs.SetInt("Player2", 0);
+                    PlayerPrefs.SetInt("Player2", 1);
                     PlayerPrefs.SetInt("Player2Char", 2);
                 }
             }
@@ -113,19 +117,23 @@ public class CursorMovement : MonoBehaviour {
     }
 
 
-/*
     public void DeSelectCharacter(){
+        
+       // Debug.Log("Presionado");
         
         if(PlayerPrefs.HasKey("Player1Char")){
            // gameObject.GetComponent<CharacterSelectiorManager>().P1Cursor.SetActive(true);
             PlayerPrefs.DeleteKey("Player1");
             PlayerPrefs.DeleteKey("Player1Char");
+
+            //gameObject.GetComponent<CharacterSelectiorManager>().hasSelectedBefore = true;
+            
         }
-      /*  if(PlayerPrefs.HasKey("Player2Char")){
+        if(PlayerPrefs.HasKey("Player2Char")){
             PlayerPrefs.DeleteKey("Player2");
             PlayerPrefs.DeleteKey("Player2Char");
         } 
-    } */
+    } 
 
 
 

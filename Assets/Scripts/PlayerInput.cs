@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
  
 public class PlayerInput : MonoBehaviour
 {   
@@ -55,6 +56,8 @@ public class PlayerInput : MonoBehaviour
     public int test;
 
     public int canPlay;
+
+    bool AddedPoints = false;
 
     private void Awake() {
         control = new Controls();
@@ -183,7 +186,31 @@ public class PlayerInput : MonoBehaviour
 
             }
         }
+
+
+        if(dead){
+            //int playerLost;
+            //playerLost = PlayerID;
+            //gameObject.GetComponent<RoundManager>().PlayerID = playerLost;
+            //PlayerPrefs.SetInt("LosingPlayer", playerLost);  //Esto guarda quien pierde por ronda
+        
+            if(!AddedPoints){
+                RoundManager roundManager = GameObject.FindWithTag("GameController").GetComponent<RoundManager>();
+                roundManager.Points(PlayerID);
+                AddedPoints = true;
+                
+            }
+            
+            
+
+
+        }
+
     } //end of void update
+
+    
+
+
 
 
       void OnCollisionEnter2D(Collision2D col) {
