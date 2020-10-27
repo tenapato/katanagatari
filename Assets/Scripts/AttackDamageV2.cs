@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/* Authors
+- Patricio Tena A01027293
+- Rodrigo Benavente A01026973
+- Fernando Garrato A01027503
+
+    This script is used handles the damage per attack of each player.
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

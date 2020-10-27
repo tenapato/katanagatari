@@ -1,4 +1,14 @@
-﻿using System.Collections;
+﻿/* Authors
+- Patricio Tena A01027293
+- Rodrigo Benavente A01026973
+- Fernando Garrato A01027503
+
+    This script is used for managing the rounds each player was won and loanding the final menu
+*/
+
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +23,11 @@ public class RoundManager : MonoBehaviour
 
     public Text winner;
     public GameObject pauseMenu;
+
+    public int numberOfRounds;
+    
+
+    
     void Start()
     {
         //PlayerPrefs.SetInt("PuntosP1",0);
@@ -23,46 +38,42 @@ public class RoundManager : MonoBehaviour
         Debug.Log("Puntos p1: " + winsP1);
         Debug.Log("Puntos p2: " + winsP2);
         pauseMenu.SetActive(false);
+        //winsP1text.setActive(false);
+        //winsP2text.setActive(false);
+       
+        
+
+        
     }
 
-    
+
     public void Points(int PlayerID)
     {
-        
-        //Debug.Log(PlayerID);
-
-        if(PlayerID == 0 && winsP2 <2){
+        if(PlayerID == 0 && winsP2 <numberOfRounds){
             winsP2++;
-            PlayerPrefs.SetInt("PuntosP2", winsP2);
-            
+            PlayerPrefs.SetInt("PuntosP2", winsP2);     
         }
-        if(PlayerID == 1 && winsP1 < 2){
+        if(PlayerID == 1 && winsP1 < numberOfRounds){
             winsP1++;
             PlayerPrefs.SetInt("PuntosP1", winsP1);
-           
         }
-        if(winsP1 == 2 ){
+        if(winsP1 == numberOfRounds){
             winner.text = "P1 WINS"; 
             PlayerPrefs.SetInt("PuntosP1",0);
             PlayerPrefs.SetInt("PuntosP2",0);
+            PlayerPrefs.SetInt("canPlay", 0);
             StartCoroutine(waitForMenu());
         }
-        if(winsP2 == 2){
+        else if(winsP2 == numberOfRounds){
             winner.text = "P2 WINS"; 
             PlayerPrefs.SetInt("PuntosP1",0);
             PlayerPrefs.SetInt("PuntosP2",0);
+            PlayerPrefs.SetInt("canPlay", 0);
             StartCoroutine(waitForMenu());
         }
-
-        if(winsP1 != 2){
-            StartCoroutine(waitForRound());
-            if(winsP2 != 2){
-            StartCoroutine(waitForRound());
-            }
-        }
-        
         else{
-            return;
+            StartCoroutine(waitForRound());
+            
         }
         
     }
@@ -70,6 +81,8 @@ public class RoundManager : MonoBehaviour
 
     IEnumerator waitForRound(){
         
+        //winsP1text.setActive(true);
+        //winsP2text.setActive(true);
         yield return new WaitForSeconds(2f);
         SceneManager.LoadSceneAsync(2);
 

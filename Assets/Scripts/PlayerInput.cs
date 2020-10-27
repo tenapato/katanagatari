@@ -1,4 +1,12 @@
-﻿
+﻿/* Authors
+- Patricio Tena A01027293
+- Rodrigo Benavente A01026973
+- Fernando Garrato A01027503
+
+    This script is used for handling the inputs of each gamepad, this script also separetes the inputs depinding on the player ID
+*/
+
+
 using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;

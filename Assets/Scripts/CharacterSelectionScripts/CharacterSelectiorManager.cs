@@ -1,4 +1,13 @@
-﻿using System.Collections;
+﻿/* Authors
+- Patricio Tena A01027293
+- Rodrigo Benavente A01026973
+- Fernando Garrato A01027503
+
+    This script handles the character selection of each player as well as the deselction of a cheracter
+*/
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;

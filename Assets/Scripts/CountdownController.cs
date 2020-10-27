@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/* Authors
+- Patricio Tena A01027293
+- Rodrigo Benavente A01026973
+- Fernando Garrato A01027503
+
+    This script is used for manangin the inical countdown and timer of each round
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +20,7 @@ public class CountdownController : MonoBehaviour
     public Text startDisplay;
     public GameObject goDisplay;
 
+    
 
 
     // Start is called before the first frame update
@@ -20,7 +29,7 @@ public class CountdownController : MonoBehaviour
         PlayerPrefs.SetInt("canPlay", 0);
         StartCoroutine(startTimer());
         
-        
+       
         
     }
 
@@ -46,6 +55,7 @@ public class CountdownController : MonoBehaviour
         }
 
         if(startTime <= 1){
+            
             startDisplay.text = "GO!";
             //startDisplay.SetActive(false);
             goDisplay.SetActive(true);
