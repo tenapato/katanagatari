@@ -89,6 +89,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Options"",
+                    ""type"": ""Button"",
+                    ""id"": ""23121259-a832-4b61-afcb-eec1a615df60"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -223,6 +231,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""L2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c71f299a-0382-4f78-9407-99d7e2085e6a"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Options"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -240,6 +259,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_R2 = m_Player.FindAction("R2", throwIfNotFound: true);
         m_Player_L1 = m_Player.FindAction("L1", throwIfNotFound: true);
         m_Player_L2 = m_Player.FindAction("L2", throwIfNotFound: true);
+        m_Player_Options = m_Player.FindAction("Options", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -298,6 +318,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_R2;
     private readonly InputAction m_Player_L1;
     private readonly InputAction m_Player_L2;
+    private readonly InputAction m_Player_Options;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -311,6 +332,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @R2 => m_Wrapper.m_Player_R2;
         public InputAction @L1 => m_Wrapper.m_Player_L1;
         public InputAction @L2 => m_Wrapper.m_Player_L2;
+        public InputAction @Options => m_Wrapper.m_Player_Options;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -347,6 +369,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @L2.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL2;
                 @L2.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL2;
                 @L2.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL2;
+                @Options.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOptions;
+                @Options.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOptions;
+                @Options.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOptions;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -378,6 +403,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @L2.started += instance.OnL2;
                 @L2.performed += instance.OnL2;
                 @L2.canceled += instance.OnL2;
+                @Options.started += instance.OnOptions;
+                @Options.performed += instance.OnOptions;
+                @Options.canceled += instance.OnOptions;
             }
         }
     }
@@ -393,5 +421,6 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnR2(InputAction.CallbackContext context);
         void OnL1(InputAction.CallbackContext context);
         void OnL2(InputAction.CallbackContext context);
+        void OnOptions(InputAction.CallbackContext context);
     }
 }

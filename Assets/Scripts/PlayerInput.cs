@@ -66,6 +66,9 @@ public class PlayerInput : MonoBehaviour
     public int canPlay;
 
     bool AddedPoints = false;
+    
+    bool isPaused = false;
+    
 
     private void Awake() {
         control = new Controls();
@@ -85,7 +88,7 @@ public class PlayerInput : MonoBehaviour
             this.control.Player.R2.performed += ctx => Dodge();
             this.control.Player.Move.performed += ctx => move_x = ctx.ReadValue<float>();
             this.control.Player.Move.canceled += ctx => move_x = 0;
-
+            this.control.Player.Options.performed += ctx => PauseGame();
         
         
     }
@@ -102,6 +105,7 @@ public class PlayerInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {  
+        
         canPlay = 0;
        test = PlayerPrefs.GetInt("Player1Char");
         Debug.Log("Player1 char:" + test);
@@ -322,6 +326,22 @@ public class PlayerInput : MonoBehaviour
         }
 
         }
+    }
+
+    void PauseGame(){
+        InGamePause inGamePause= GameObject.FindWithTag("GameController").GetComponent<InGamePause>();
+        if(canPlay == 1){
+            
+            Time.timeScale = 0;
+            inGamePause.menu.SetActive(true);
+            canPlay = 0;
+            canMove = false;
+            canJump = false;
+            //isPaused = true;
+        }
+        
+        
+
     }
 
 
