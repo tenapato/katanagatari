@@ -10,6 +10,7 @@ TagManager:
   - Ch1
   - Ch2
   - BgMusic
+  - Stg1
   layers:
   - Default
   - TransparentFX

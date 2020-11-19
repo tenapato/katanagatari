@@ -72,18 +72,7 @@ public class CursorMovement : MonoBehaviour {
 
     
     public void SelectCharacter(){
-        /*    
-        if(characterIsSelected){
-            Debug.Log("Seleccionaste a tu personaje");
-        }*/
-        /*
-        Vector2 pointerPos = cam.ScreenToWorldPoint(cursor.transform.position);
-        Collider2D col = Physics2D.OverlapPoint(pointerPos);
-        
-        if(col.tag == "Ch1"){
-            Debug.Log("Char1");
-        }*/
-
+       
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.up), 15.0f);
        // Debug.DrawRay(transform.position, Vector2.up, Color.green);
         if(hit){
@@ -92,9 +81,8 @@ public class CursorMovement : MonoBehaviour {
             
             if(hit.collider.tag == "Ch1"){
                 Debug.Log("Seleccionaste al personaje 1");
-                
                 if(PlayerID == 0){ //Este if define el personaje y el id del player 1
-                    PlayerPrefs.SetInt("Player1", 0);
+                    PlayerPrefs.SetInt("Player1", 1);
                     PlayerPrefs.SetInt("Player1Char", 1);
                     audio.Play();
                 }
@@ -117,11 +105,15 @@ public class CursorMovement : MonoBehaviour {
             }
             
 
+
+            if(hit.collider.tag == "Stg1"){
+                Debug.Log("Seleccionaste la pista 1");
+                PlayerPrefs.SetInt("StageIndex", 1);
+            }
+
         
         }
-
-
-
+    
     }
 
 
@@ -133,13 +125,14 @@ public class CursorMovement : MonoBehaviour {
            // gameObject.GetComponent<CharacterSelectiorManager>().P1Cursor.SetActive(true);
             PlayerPrefs.DeleteKey("Player1");
             PlayerPrefs.DeleteKey("Player1Char");
-
+            PlayerPrefs.DeleteKey("StageIndex");
             //gameObject.GetComponent<CharacterSelectiorManager>().hasSelectedBefore = true;
             
         }
         if(PlayerPrefs.HasKey("Player2Char")){
             PlayerPrefs.DeleteKey("Player2");
             PlayerPrefs.DeleteKey("Player2Char");
+            PlayerPrefs.DeleteKey("StageIndex");
         } 
     } 
 

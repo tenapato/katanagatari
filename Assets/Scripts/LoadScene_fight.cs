@@ -27,7 +27,7 @@ public class LoadScene_fight : MonoBehaviour
     public Slider slider;
     public Text progressText;
     public GameObject characterSelectScene;
-
+    public GameObject StageSelectionScene;
     public void LoadLevel (int sceneIndex){
         
         
@@ -37,7 +37,10 @@ public class LoadScene_fight : MonoBehaviour
 
     IEnumerator LoadAsynchrounously(int sceneIndex){
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+        StageSelectionScene.SetActive(false);
         characterSelectScene.SetActive(false);
+        
+        
         loadingScreen.SetActive(true);
         while(!operation.isDone){
            // float progress = Mathf.Clamp01(operation.progress);
