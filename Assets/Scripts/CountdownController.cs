@@ -27,6 +27,7 @@ public class CountdownController : MonoBehaviour
     void Start()
     {
         PlayerPrefs.SetInt("canPlay", 0);
+        PlayerPrefs.SetInt("lostByTime", 0);
         StartCoroutine(startTimer());
         
        
@@ -41,6 +42,10 @@ public class CountdownController : MonoBehaviour
             goDisplay.SetActive(false);
             
             countdownTime--;
+        }
+        if(countdownTime <= 0){
+            PlayerPrefs.SetInt("canPlay", 0);
+            PlayerPrefs.SetInt("lostByTime", 1);
         }
     }
     

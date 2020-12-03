@@ -113,8 +113,25 @@ public class Health : MonoBehaviour
             animator.SetTrigger("Died");
             animator.SetBool("Death", true);
             gameObject.GetComponent<PlayerInput>().dead = true;
-            //isShielding = gameObject.GetComponent<AttackDamageV2>().isShielding;
+            
         }
+    }
+
+    private void Update() {
+        if(PlayerPrefs.GetInt("lostByTime") == 1){
+                gameObject.GetComponent<PlayerInput>().wonByTime = true;
+                int playerID;
+                playerID = gameObject.GetComponent<PlayerInput>().PlayerID;
+
+                if(playerID == 0){
+                    PlayerPrefs.SetInt("HealthP1", currentHealth);
+                }
+                if(playerID == 1){
+                    PlayerPrefs.SetInt("HealthP2", currentHealth);
+                }
+
+
+            }
     }
 
 

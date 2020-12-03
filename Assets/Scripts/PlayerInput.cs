@@ -55,6 +55,7 @@ public class PlayerInput : MonoBehaviour
     /*----------------------------*/
 
     public bool dead;
+    public bool wonByTime;
    
     public Transform Oponent;
     public Transform Player;
@@ -69,6 +70,8 @@ public class PlayerInput : MonoBehaviour
     
     bool isPaused = false;
     
+    int HP1;
+    int HP2;
 
     private void Awake() {
         control = new Controls();
@@ -105,7 +108,7 @@ public class PlayerInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {  
-        
+        wonByTime = false;
         canPlay = 0;
        test = PlayerPrefs.GetInt("Player1Char");
         Debug.Log("Player1 char:" + test);
@@ -213,9 +216,20 @@ public class PlayerInput : MonoBehaviour
                 
             }
             
-            
 
 
+        }
+
+        if(wonByTime){
+            Debug.Log("Gano por tiempo");
+                if(!AddedPoints){
+                HP1 = PlayerPrefs.GetInt("HealthP1");
+                HP2 = PlayerPrefs.GetInt("HealthP2");
+                RoundManager roundManager = GameObject.FindWithTag("GameController").GetComponent<RoundManager>();
+                roundManager.PointsByTime(PlayerID, HP1, HP2);
+                AddedPoints = true;
+                
+            }
         }
 
     } //end of void update
